@@ -24,7 +24,7 @@ $ go run src/main.go
 
 ## Docker
 
-Drone plugins work off of docker images. The folloing commands will go over building, pushing, and running the docker image for this plugin.
+Drone plugins work off of docker images. The following commands will go over building, pushing, and running the docker image for this plugin.
 
 ###### Build Docker Image:
 
