@@ -1,0 +1,44 @@
+kind: pipeline
+type: kubernetes
+name: continuous-deployment
+
+platform:
+  os: linux
+  arch: amd64
+
+trigger:
+  event:
+    - tag
+
+steps:
+- name: build-and-publish
+  image: plugins/docker
+  settings:
+    context: .
+    dockerfile: Dockerfile
+    username:
+      from_secret: registry_username
+    password:
+      from_secret: registry_password
+    registry: registry.hub.docker.com
+    repo: registry.hub.docker.com/jetrails/drone-cloudflare-dns
+    tags:
+      - "${DRONE_TAG}"
+
+---
+
+kind: secret
+name: registry_username
+
+get:
+  path: docker.com/data/accounts/jetrailsbot/access-tokens/drone-ci
+  name: username
+
+---
+
+kind: secret
+name: registry_password
+
+get:
+  path: docker.com/data/accounts/jetrailsbot/access-tokens/drone-ci
+  name: password
