@@ -1,0 +1,13 @@
+# Files
+.DS_Store
+.gitignore
+Dockerfile
+LICENSE.md
+README.md
+.dockerignore
+.drone.yaml
+
+# Directories
+bin
+.git
+

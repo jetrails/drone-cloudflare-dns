@@ -18,8 +18,8 @@ The API token that is used to authenticate with Cloudflare's API can be created 
 Develop locally by running the plugin with the following commands. Also please note that you should specify environmental variables for the plugin either via the inline method (`FOO=bar go run src/main`) or via the `export FOO=bar` method before the `go run` command.
 
 ```shell
-$ dep ensure
-$ go run src/main.go
+$ go mod download
+$ go run cmd/main/main.go
 ```
 
 ## Docker

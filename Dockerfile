@@ -1,14 +1,11 @@
-FROM golang:alpine as build-env
-WORKDIR /go/src/app
-ENV GOOS=linux GOARCH=amd64 CGO_ENABLED=0
-RUN apk -Uuq add git dep ca-certificates
-COPY Gopkg.toml Gopkg.lock src/main.go /go/src/app/
-RUN dep ensure
-RUN go build -o main
+FROM golang:1.17.6-alpine as build-env
+WORKDIR /usr/src/app
+COPY . .
+RUN go mod download && go mod verify
+RUN go build -o ./bin/main ./cmd/main/main.go
 
 FROM alpine
 LABEL maintainer development@jetrails.com
-COPY --from=build-env /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY --from=build-env /go/src/app/main /usr/local/bin/main
+COPY --from=build-env /usr/src/app/bin/main /usr/local/bin/main
 RUN chmod +x /usr/local/bin/main
-ENTRYPOINT [ "main" ]
+ENTRYPOINT [ "/usr/local/bin/main" ]
